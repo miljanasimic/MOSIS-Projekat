@@ -3,6 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/button_rounded_palette1.xml" value="0.24" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/button_rounded_palette2.xml" value="0.179" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/input_rounded.xml" value="0.132" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/activity_main.xml" value="0.24270833333333333" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/content_main.xml" value="0.23125" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_login.xml" value="0.2171875" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_registration.xml" value="0.264" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_welcome.xml" value="0.23125" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/Projekat/app/src/main/res/drawable/button_rounded.xml" value="0.2375" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/Projekat/app/src/main/res/drawable/button_rounded_palette1.xml" value="0.174" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/Projekat/app/src/main/res/drawable/button_rounded_palette2.xml" value="0.174" />
