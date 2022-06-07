@@ -5,11 +5,11 @@
     <string name="signup">Sign Up</string>
     <string name="app_description">Help people find their best friend!</string>
     <!-- Strings related to login page-->
-    <string name="prompt_username">Enter your username</string>
+    <string name="prompt_email">Enter your email</string>
     <string name="prompt_password">Enter your password</string>
     <string name="title">Welcome Back!</string>
     <string name="welcome">Welcome</string>
-    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_email">Not a valid e-mail address</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
@@ -22,7 +22,7 @@
     <string name="prompt_last_name">Last Name</string>
     <string name="prompt_phone">Phone Number</string>
     <string name="prompt_password_signup">Password</string>
-    <string name="prompt_username_signup">Username</string>
+    <string name="prompt_email_signup">E-mail</string>
     <string name="take_photo">Take a photo</string>
     <string name="already_have_acc">Already have an account?</string>
 

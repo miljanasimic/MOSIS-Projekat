@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".RegistrationFragment">
+    tools:context=".ui.register.RegistrationFragment">
 
     <ImageView
         android:id="@+id/imageLogo"
@@ -103,7 +103,6 @@
         android:layout_width="110dp"
         android:layout_height="86dp"
         android:layout_marginTop="32dp"
-        android:foregroundTintMode="add"
         android:scaleType="centerCrop"
         android:src="@android:drawable/ic_menu_camera"
         android:tintMode="multiply"
@@ -118,11 +117,12 @@
         android:layout_width="186dp"
         android:layout_height="128dp"
         android:layout_marginTop="20dp"
+        android:tint="@color/palette1"
+        app:layout_constraintBottom_toTopOf="@id/email_text_input_layout"
         app:layout_constraintEnd_toStartOf="@id/camera"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone_number_text_input_layout"
-        app:layout_constraintBottom_toTopOf="@id/username_text_input_layout"
-        tools:src="@tools:sample/avatars" />
+        app:srcCompat="@drawable/ic_baseline_person_24" />
 
     <TextView
         android:id="@+id/textTakePhoto"
@@ -138,7 +138,7 @@
         app:layout_constraintVertical_bias="0.772" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@id/username_text_input_layout"
+        android:id="@id/email_text_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -150,13 +150,13 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView">
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
-            android:hint="@string/prompt_username_signup"
-            android:inputType="text"
+            android:hint="@string/prompt_email_signup"
+            android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
             android:textColor="#AAAAAA"
             app:layout_constraintEnd_toEndOf="parent"
@@ -172,7 +172,7 @@
         android:layout_marginBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username_text_input_layout"
+        app:layout_constraintTop_toBottomOf="@+id/email_text_input_layout"
         app:passwordToggleEnabled="true">
 
         <EditText

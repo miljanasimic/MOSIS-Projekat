@@ -27,7 +27,7 @@
 
      <fragment
          android:id="@+id/RegistrationFragment"
-         android:name="elfak.mosis.petfinder.RegistrationFragment"
+         android:name="elfak.mosis.petfinder.ui.register.RegistrationFragment"
          tools:layout="@layout/fragment_registration">
          <action
              android:id="@+id/action_RegistrationFragment_to_LoginFragment"
