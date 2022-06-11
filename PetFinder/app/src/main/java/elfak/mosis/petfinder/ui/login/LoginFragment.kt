@@ -15,19 +15,29 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import elfak.mosis.petfinder.databinding.FragmentLoginBinding
 
 import elfak.mosis.petfinder.R
+import elfak.mosis.petfinder.data.model.User
 
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var auth: FirebaseAuth
     private var _binding: FragmentLoginBinding? = null
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+//    private var emailEditText: EditText = binding.email
+//    private var passwordEditText: EditText = binding.password
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,6 +54,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
+        auth = Firebase.auth
 
         val emailEditText: EditText = binding.email
         val passwordEditText: EditText = binding.password
@@ -103,11 +114,30 @@ class LoginFragment : Fragment() {
 
         loginButton.setOnClickListener {
             loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.login(
-                emailEditText.text.toString(),
-                passwordEditText.text.toString()
-            )
+            auth.signInWithEmailAndPassword(emailEditText.text.toString(),passwordEditText.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
+                        // Sign in success, update UI with the signed-in user's information
+
+                        println("createUserWithEmail:success")
+
+                    } else {
+                        toast("Incorrect username or password. Please try again.", Toast.LENGTH_LONG)
+                    }
+                    loadingProgressBar.visibility = View.GONE
+                }
+//            loginViewModel.login(
+//                emailEditText.text.toString(),
+//                passwordEditText.text.toString()
+//            )
         }
+    }
+
+    private fun toast(text: String, length: Int) {
+        val appContext = context?.applicationContext ?: return
+        Toast.makeText(appContext, text, length).show()
+
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
@@ -125,5 +155,14 @@ class LoginFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    override fun onResume() {
+        super.onResume()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 }

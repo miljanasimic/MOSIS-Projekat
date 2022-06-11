@@ -14,7 +14,6 @@ class RegisterViewModel : ViewModel() {
     fun register(firstName: String, lastName: String, phoneNumber: String,email: String, password: String ) {
         //TODO dodati sliku
         auth = Firebase.auth
-        auth.createUserWithEmailAndPassword(email, password)
 
     }
 }
