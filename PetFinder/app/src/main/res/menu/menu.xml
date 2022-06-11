@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="elfak.mosis.petfinder.MainActivity">
+
+    <item
+        android:id="@+id/action_notifications"
+        android:icon="@drawable/ic_baseline_notifications_none_50"
+        android:title="Notifications"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_profile"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_baseline_person_outline_50"
+        android:title="Profile" />
+    <item
+        android:id="@+id/action_logout"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_baseline_exit_to_app_50"
+        android:title="Log out" />
+</menu>

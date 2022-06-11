@@ -117,12 +117,12 @@
         android:layout_width="186dp"
         android:layout_height="128dp"
         android:layout_marginTop="20dp"
-        android:tint="@color/palette1"
         app:layout_constraintBottom_toTopOf="@id/email_text_input_layout"
         app:layout_constraintEnd_toStartOf="@id/camera"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phone_number_text_input_layout"
-        app:srcCompat="@drawable/ic_baseline_person_24" />
+        app:srcCompat="@drawable/ic_baseline_person_24"
+        app:tint="@color/palette1" />
 
     <TextView
         android:id="@+id/textTakePhoto"

@@ -1,9 +1,7 @@
 package elfak.mosis.petfinder
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -39,6 +37,7 @@ class WelcomeFragment : Fragment() {
             findNavController().navigate(R.id.action_WelcomeFragment_to_RegistrationFragment)
         }
     }
+
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
