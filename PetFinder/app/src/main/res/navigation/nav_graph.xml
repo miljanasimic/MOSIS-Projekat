@@ -45,6 +45,28 @@
         <action
             android:id="@+id/action_HomeFragment_to_WelcomeFragment"
             app:destination="@id/WelcomeFragment"/>
+        <action
+            android:id="@+id/action_HomeFragment_to_FriendsFragment"
+            app:destination="@id/FriendsFragment"/>
+        <action
+            android:id="@+id/action_HomeFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/FriendsFragment"
+        android:name="elfak.mosis.petfinder.FriendsFragment"
+        tools:layout="@layout/fragment_friends">
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="elfak.mosis.petfinder.ProfileFragment"
+        tools:layout="@layout/fragment_profile">
+
 
     </fragment>
 

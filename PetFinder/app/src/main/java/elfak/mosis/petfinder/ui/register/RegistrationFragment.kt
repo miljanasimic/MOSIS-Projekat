@@ -59,7 +59,7 @@ class RegistrationFragment : Fragment() {
         val passwordEditText: EditText = binding.password
         val signUpButton: Button = binding.buttonSignUp
         val progressBar: ProgressBar = binding.progressBar
-        signUpButton.isEnabled=true
+        signUpButton.isEnabled=false
         binding.textLogin.setOnClickListener {
             findNavController().navigate(R.id.action_RegistrationFragment_to_LoginFragment)
         }

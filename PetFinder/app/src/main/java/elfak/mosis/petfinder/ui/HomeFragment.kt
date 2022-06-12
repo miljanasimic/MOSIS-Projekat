@@ -5,14 +5,12 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import elfak.mosis.petfinder.R
 import elfak.mosis.petfinder.databinding.FragmentHomeBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -31,10 +29,8 @@ class HomeFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        toolBar = requireView().findViewById<Toolbar>(R.id.myToolBar)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity?)!!.supportActionBar?.setHomeButtonEnabled(false)
-//        (activity as AppCompatActivity?)!!.setSupportActionBar(toolBar)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -42,4 +38,17 @@ class HomeFragment : Fragment() {
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_profile-> {
+                this.findNavController().navigate(R.id.action_HomeFragment_to_ProfileFragment)
+                true
+            }
+            R.id.action_notifications -> {
+                //this.findNavController().navigate()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }

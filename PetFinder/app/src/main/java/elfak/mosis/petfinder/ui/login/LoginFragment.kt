@@ -113,20 +113,18 @@ class LoginFragment : Fragment() {
 //        }
 
         loginButton.setOnClickListener {
-            loadingProgressBar.visibility = View.VISIBLE
-            auth.signInWithEmailAndPassword(emailEditText.text.toString(),passwordEditText.text.toString())
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
-                        // Sign in success, update UI with the signed-in user's information
-
-                        println("createUserWithEmail:success")
-
-                    } else {
-                        toast("Incorrect username or password. Please try again.", Toast.LENGTH_LONG)
-                    }
-                    loadingProgressBar.visibility = View.GONE
-                }
+            findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
+//            loadingProgressBar.visibility = View.VISIBLE
+//            auth.signInWithEmailAndPassword(emailEditText.text.toString(),passwordEditText.text.toString())
+//                .addOnCompleteListener { task ->
+//                    if (task.isSuccessful) {
+//                        findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
+//                        println("createUserWithEmail:success")
+//                    } else {
+//                        toast("Incorrect username or password. Please try again.", Toast.LENGTH_LONG)
+//                    }
+//                    loadingProgressBar.visibility = View.GONE
+//                }
 //            loginViewModel.login(
 //                emailEditText.text.toString(),
 //                passwordEditText.text.toString()

@@ -32,7 +32,6 @@ class WelcomeFragment : Fragment() {
         binding.buttonLogin.setOnClickListener {
             findNavController().navigate(R.id.action_WelcomeFragment_to_LoginFragment)
         }
-
         binding.buttonSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_WelcomeFragment_to_RegistrationFragment)
         }
@@ -41,6 +40,7 @@ class WelcomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+
     }
 
     override fun onStop() {

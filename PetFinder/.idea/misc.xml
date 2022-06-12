@@ -13,14 +13,22 @@
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2105" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/ic_baseline_person_outline_50.xml" value="0.1" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2105" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/ic_outline_add_post.xml" value="0.1" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/ic_outline_friends.xml" value="0.1" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/ic_outline_home.xml" value="0.1" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/ic_outline_location_on.xml" value="0.1" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/ic_outline_rank.xml" value="0.1" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/drawable/input_rounded.xml" value="0.132" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/activity_main.xml" value="0.24270833333333333" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/app_bar.xml" value="0.26458333333333334" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/content_main.xml" value="0.23125" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_friends.xml" value="0.176" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_login.xml" value="0.2171875" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_profile.xml" value="0.13541666666666666" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_registration.xml" value="0.2" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/layout/fragment_welcome.xml" value="0.23125" />
+        <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/menu/bottom_menu.xml" value="0.21388888888888888" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/PetFinder/app/src/main/res/menu/menu.xml" value="0.264" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/Projekat/app/src/main/res/drawable/button_rounded.xml" value="0.2375" />
         <entry key="..\:/FAKS/MOSIS/MOSIS-Projekat/Projekat/app/src/main/res/drawable/button_rounded_palette1.xml" value="0.174" />

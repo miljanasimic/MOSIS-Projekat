@@ -26,5 +26,12 @@
     <string name="take_photo">Take a photo</string>
     <string name="already_have_acc">Already have an account?</string>
 
+    <!-- Strings related to bottom navigation bar-->
+    <string name="home">Home</string>
+    <string name="map">Map</string>
+    <string name="post">Post</string>
+    <string name="friends">Friends</string>
+    <string name="rank">Rank</string>
+
 
 </resources>
