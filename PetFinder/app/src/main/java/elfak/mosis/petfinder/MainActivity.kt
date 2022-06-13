@@ -25,7 +25,6 @@ import elfak.mosis.petfinder.ui.HomeFragment
 class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
-    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +48,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         //TODO backstack za fragmente
-
-
-
-
-
-
     }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
@@ -65,7 +58,6 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         val navController = findNavController(R.id.nav_host_fragment_content_main)
-
 
         Toast.makeText(applicationContext,"back",Toast.LENGTH_LONG).show()
     }

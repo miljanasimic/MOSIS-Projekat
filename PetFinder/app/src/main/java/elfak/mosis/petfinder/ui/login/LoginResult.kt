@@ -1,9 +1,6 @@
 package elfak.mosis.petfinder.ui.login
 
-/**
- * Authentication result : success (user details) or error message.
- */
 data class LoginResult(
-    val success: LoggedInUserView? = null,
-    val error: Int? = null
+    val isSuccess: Boolean = false,
+    val message: String? = null
 )

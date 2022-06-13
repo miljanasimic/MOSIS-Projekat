@@ -10,6 +10,7 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,8 +37,8 @@ class RegistrationFragment : Fragment() {
     private lateinit var photoFile: File
     private lateinit var photoUri: Uri
     private val REQUEST_IMAGE_CAPTURE = 1
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+
+    // This property is only valid between onCreateView and onDestroyView.
     private val binding get() = _binding!!
     private val registerViewModel: RegisterViewModel by activityViewModels()
 
@@ -61,7 +62,6 @@ class RegistrationFragment : Fragment() {
         val passwordEditText: EditText = binding.password
         val signUpButton: Button = binding.buttonSignUp
         val progressBar: ProgressBar = binding.progressBar
-        //signUpButton.isEnabled=false
 
         binding.textLogin.setOnClickListener {
             findNavController().navigate(R.id.action_RegistrationFragment_to_LoginFragment)
@@ -77,10 +77,6 @@ class RegistrationFragment : Fragment() {
                 }
             }
         }
-//        firstNameEditText.addTextChangedListener(afterTextChangedListener)
-//        lastNameEditText.addTextChangedListener(afterTextChangedListener)
-//        phoneEditText.addTextChangedListener(afterTextChangedListener)
-//        emailEditText.addTextChangedListener(afterTextChangedListener)
         passwordEditText.addTextChangedListener(afterPasswordChangedListener)
 
         binding.camera.setOnClickListener {
@@ -119,6 +115,16 @@ class RegistrationFragment : Fragment() {
                 || emailEditText.text.isEmpty()
                 || passwordEditText.text.isEmpty())
                 return@setOnClickListener
+
+            if (!registerViewModel.isEmailValid(emailEditText.text.toString())){
+                binding.emailTextInputLayout.error="Please enter a valid e-mail address"
+                return@setOnClickListener
+            }
+            if (!registerViewModel.isPhoneValid(phoneEditText.text.toString())){
+                binding.phoneNumberTextInputLayout.error="Please enter a valid phone number"
+                return@setOnClickListener
+            }
+            //TODO ako ne unese sliku???
             progressBar.setVisibility(View.VISIBLE)
             val user = User(firstNameEditText.text.toString(), lastNameEditText.text.toString(),
                 phoneEditText.text.toString(),"",emailEditText.text.toString() )
@@ -127,32 +133,21 @@ class RegistrationFragment : Fragment() {
 
         registerViewModel.registerResult.observe(viewLifecycleOwner,
         Observer { result ->
-            //result ?: return@Observer
             progressBar.visibility = View.GONE
             result.success?.let{
-                toast(it,Toast.LENGTH_LONG)
+                Toast.makeText(view.context, it, Toast.LENGTH_LONG).show()
                 findNavController().navigate(R.id.action_RegistrationFragment_to_LoginFragment)
             }
             result.error?.let{
-                toast(it,Toast.LENGTH_LONG)
+                Toast.makeText(view.context, it, Toast.LENGTH_LONG).show()
             }
         })
-    }
-
-    fun isEmailValid(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     private fun getPhotoFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("JPEG_${timeStamp}_",".jpg",storageDir)
-    }
-
-    private fun toast(text: String, length: Int) {
-        val appContext = context?.applicationContext ?: return
-        Toast.makeText(appContext, text, length).show()
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -162,7 +157,6 @@ class RegistrationFragment : Fragment() {
             binding.imageView.setColorFilter(Color.parseColor("#80000000"))
         }
     }
-
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
