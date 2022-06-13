@@ -27,4 +27,18 @@
         android:id="@+id/include"
         layout="@layout/content_main" />
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background"
+        app:itemTextColor="@color/palette1"
+        app:itemIconTint="@color/palette1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu"
+        app:elevation="15dp"
+        app:labelVisibilityMode="labeled"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

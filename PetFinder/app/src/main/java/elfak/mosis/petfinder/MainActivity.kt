@@ -10,8 +10,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.fragment.app.commit
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -29,14 +32,26 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        //val navController = findNavController(R.id.nav_host_fragment_content_main)
-        //appBarConfiguration = AppBarConfiguration(navController.graph)
-        //setupActionBarWithNavController(navController, appBarConfiguration)
 
-        //val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_content_main) as NavHostFragment
-       // val navController = navHostFragment.navController
-       // val bottomNav=findViewById<BottomNavigationView>(R.id.bottomNavigationView)
-        //bottomNav.setupWithNavController(navController)
+        val bottomNav=findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        appBarConfiguration = AppBarConfiguration(navController.graph)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        bottomNav.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when(destination.id){
+                R.id.HomeFragment -> bottomNav.visibility = View.VISIBLE
+                R.id.MapFragment -> bottomNav.visibility = View.VISIBLE
+                R.id.NewPostFragment-> bottomNav.visibility = View.VISIBLE
+                R.id.FriendsFragment -> bottomNav.visibility = View.VISIBLE
+                R.id.RankFragment -> bottomNav.visibility = View.VISIBLE
+                else -> bottomNav.visibility = View.GONE
+            }
+        }
+        //TODO backstack za fragmente
+
+
+
 
 
 
@@ -45,6 +60,14 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration)
                 || super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val navController = findNavController(R.id.nav_host_fragment_content_main)
+
+
+        Toast.makeText(applicationContext,"back",Toast.LENGTH_LONG).show()
     }
 
 }

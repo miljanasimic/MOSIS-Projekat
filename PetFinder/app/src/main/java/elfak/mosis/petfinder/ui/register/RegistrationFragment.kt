@@ -1,16 +1,15 @@
 package elfak.mosis.petfinder.ui.register
 
 import android.app.Activity.RESULT_OK
-import android.content.ActivityNotFoundException
-import android.content.ContentValues.TAG
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,25 +17,29 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import elfak.mosis.petfinder.R
 import elfak.mosis.petfinder.data.model.User
 import elfak.mosis.petfinder.databinding.FragmentRegistrationBinding
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RegistrationFragment : Fragment() {
-    private lateinit var auth: FirebaseAuth
     private var _binding: FragmentRegistrationBinding? = null
-    val REQUEST_IMAGE_CAPTURE = 1
-    val db = Firebase.firestore
+    private lateinit var currentPhotoPath: String
+    private lateinit var photoFile: File
+    private lateinit var photoUri: Uri
+    private val REQUEST_IMAGE_CAPTURE = 1
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private val registerViewModel: RegisterViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +54,6 @@ class RegistrationFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        auth = Firebase.auth
         val firstNameEditText: EditText = binding.firstname
         val lastNameEditText: EditText = binding.lastname
         val phoneEditText: EditText = binding.phone
@@ -59,64 +61,92 @@ class RegistrationFragment : Fragment() {
         val passwordEditText: EditText = binding.password
         val signUpButton: Button = binding.buttonSignUp
         val progressBar: ProgressBar = binding.progressBar
-        signUpButton.isEnabled=false
+        //signUpButton.isEnabled=false
+
         binding.textLogin.setOnClickListener {
             findNavController().navigate(R.id.action_RegistrationFragment_to_LoginFragment)
         }
-        val afterTextChangedListener = object : TextWatcher {
+        val afterPasswordChangedListener = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
             }
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
             }
             override fun afterTextChanged(s: Editable) {
-                signUpButton.isEnabled= (firstNameEditText.text.isNotEmpty())
-                        && (lastNameEditText.text.isNotEmpty())
-                        && (phoneEditText.text.isNotEmpty())
-                        && (emailEditText.text.isNotEmpty())
-                        && (passwordEditText.text.isNotEmpty())
+                if (passwordEditText.text.isNotEmpty() && passwordEditText.text.length<6){
+                    binding.passwordTextInputLayout.setError("Password must be at least 6 characters")
+                }
             }
         }
-        firstNameEditText.addTextChangedListener(afterTextChangedListener)
-        lastNameEditText.addTextChangedListener(afterTextChangedListener)
-        phoneEditText.addTextChangedListener(afterTextChangedListener)
-        emailEditText.addTextChangedListener(afterTextChangedListener)
-        passwordEditText.addTextChangedListener(afterTextChangedListener)
+//        firstNameEditText.addTextChangedListener(afterTextChangedListener)
+//        lastNameEditText.addTextChangedListener(afterTextChangedListener)
+//        phoneEditText.addTextChangedListener(afterTextChangedListener)
+//        emailEditText.addTextChangedListener(afterTextChangedListener)
+        passwordEditText.addTextChangedListener(afterPasswordChangedListener)
+
         binding.camera.setOnClickListener {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            try {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-            } catch (e: ActivityNotFoundException) {
-                // display error state to the user
+            photoFile = getPhotoFile()
+            currentPhotoPath=photoFile.name
+            photoFile.also {
+                val appContext = context?.applicationContext ?: return@also
+                photoUri = FileProvider.getUriForFile(
+                    appContext,
+                    "elfak.mosis.petfinder.fileprovider",
+                    it)
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
             }
-
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
         }
         signUpButton.setOnClickListener{
-
+            if (firstNameEditText.text.isEmpty()) {
+                binding.firstNameTextInputLayout.setError("First name is required")
+            }
+            if (lastNameEditText.text.isEmpty()) {
+                binding.lastNameTextInputLayout.setError("Last name is required")
+            }
+            if (phoneEditText.text.isEmpty()) {
+                binding.phoneNumberTextInputLayout.setError("Phone number is required")
+            }
+            if (emailEditText.text.isEmpty()) {
+                binding.emailTextInputLayout.setError("E-mail address is required")
+            }
+            if (passwordEditText.text.isEmpty()) {
+                binding.passwordTextInputLayout.setError("Password is required")
+            }
+            if (firstNameEditText.text.isEmpty()
+                || lastNameEditText.text.isEmpty()
+                || phoneEditText.text.isEmpty()
+                || emailEditText.text.isEmpty()
+                || passwordEditText.text.isEmpty())
+                return@setOnClickListener
             progressBar.setVisibility(View.VISIBLE)
-            auth.createUserWithEmailAndPassword(emailEditText.text.toString(), passwordEditText.text.toString())
-                .addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        val user: User = User(firstNameEditText.text.toString(), lastNameEditText.text.toString(),
-                        phoneEditText.text.toString(),"",emailEditText.text.toString() )
-                        db.collection("users")
-                            .add(user)
-                            .addOnSuccessListener { documentReference ->
-                                Log.d(TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
-                            }
-                            .addOnFailureListener { e ->
-                                Log.w(TAG, "Error adding document", e)
-                            }
-                        println("createUserWithEmail:success")
-                        toast("Your account has been successfully created! Please log in.", Toast.LENGTH_LONG)
-                        findNavController().navigate(R.id.action_RegistrationFragment_to_LoginFragment)
-
-                    } else {
-                        toast(task.result.toString(), Toast.LENGTH_LONG)
-                    }
-                    progressBar.setVisibility(View.GONE)
-                }
+            val user = User(firstNameEditText.text.toString(), lastNameEditText.text.toString(),
+                phoneEditText.text.toString(),"",emailEditText.text.toString() )
+            registerViewModel.register(user, passwordEditText.text.toString(),currentPhotoPath, photoUri)
         }
+
+        registerViewModel.registerResult.observe(viewLifecycleOwner,
+        Observer { result ->
+            //result ?: return@Observer
+            progressBar.visibility = View.GONE
+            result.success?.let{
+                toast(it,Toast.LENGTH_LONG)
+                findNavController().navigate(R.id.action_RegistrationFragment_to_LoginFragment)
+            }
+            result.error?.let{
+                toast(it,Toast.LENGTH_LONG)
+            }
+        })
+    }
+
+    fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun getPhotoFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile("JPEG_${timeStamp}_",".jpg",storageDir)
     }
 
     private fun toast(text: String, length: Int) {
@@ -127,19 +157,18 @@ class RegistrationFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
+            val imageBitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
             binding.imageView.setImageBitmap(imageBitmap)
             binding.imageView.setColorFilter(Color.parseColor("#80000000"))
         }
     }
+
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
     }
-
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
-
 }

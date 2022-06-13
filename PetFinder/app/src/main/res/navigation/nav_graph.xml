@@ -6,7 +6,7 @@
     app:startDestination="@id/WelcomeFragment">
     <fragment
         android:id="@+id/WelcomeFragment"
-        android:name="elfak.mosis.petfinder.WelcomeFragment"
+        android:name="elfak.mosis.petfinder.ui.WelcomeFragment"
         tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_WelcomeFragment_to_LoginFragment"
@@ -46,25 +46,41 @@
             android:id="@+id/action_HomeFragment_to_WelcomeFragment"
             app:destination="@id/WelcomeFragment"/>
         <action
-            android:id="@+id/action_HomeFragment_to_FriendsFragment"
-            app:destination="@id/FriendsFragment"/>
-        <action
             android:id="@+id/action_HomeFragment_to_ProfileFragment"
             app:destination="@id/ProfileFragment"/>
 
     </fragment>
 
     <fragment
+        android:id="@+id/MapFragment"
+        android:name="elfak.mosis.petfinder.ui.MapFragment"
+        tools:layout="@layout/fragment_map">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/NewPostFragment"
+        android:name="elfak.mosis.petfinder.ui.NewPostFragment"
+        tools:layout="@layout/fragment_new_post">
+    </fragment>
+
+    <fragment
         android:id="@+id/FriendsFragment"
-        android:name="elfak.mosis.petfinder.FriendsFragment"
+        android:name="elfak.mosis.petfinder.ui.FriendsFragment"
         tools:layout="@layout/fragment_friends">
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/RankFragment"
+        android:name="elfak.mosis.petfinder.ui.RankFragment"
+        tools:layout="@layout/fragment_rank">
 
     </fragment>
 
     <fragment
         android:id="@+id/ProfileFragment"
-        android:name="elfak.mosis.petfinder.ProfileFragment"
+        android:name="elfak.mosis.petfinder.ui.ProfileFragment"
         tools:layout="@layout/fragment_profile">
 
 

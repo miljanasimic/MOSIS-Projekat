@@ -1,11 +1,10 @@
-package elfak.mosis.petfinder
+package elfak.mosis.petfinder.ui
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import elfak.mosis.petfinder.R
 
 
 class ProfileFragment : Fragment() {
@@ -13,6 +12,7 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
     }
 
@@ -29,7 +29,8 @@ class ProfileFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity?)!!.supportActionBar?.setHomeButtonEnabled(true)
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
 
-
-
+    }
 }

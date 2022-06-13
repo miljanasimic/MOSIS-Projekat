@@ -3,17 +3,15 @@ package elfak.mosis.petfinder.ui
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import elfak.mosis.petfinder.R
-import elfak.mosis.petfinder.databinding.FragmentHomeBinding
+import elfak.mosis.petfinder.databinding.FragmentRankBinding
 
 
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+class RankFragment : Fragment() {
+
+    private var _binding: FragmentRankBinding? = null
     private val binding get() = _binding!!
-    private lateinit var toolBar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -24,9 +22,10 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentRankBinding.inflate(inflater, container, false)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -38,17 +37,4 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_profile-> {
-                this.findNavController().navigate(R.id.action_HomeFragment_to_ProfileFragment)
-                true
-            }
-            R.id.action_notifications -> {
-                //this.findNavController().navigate()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }

@@ -32,6 +32,9 @@
     <string name="post">Post</string>
     <string name="friends">Friends</string>
     <string name="rank">Rank</string>
+    <string name="notifications">Notifications</string>
+    <string name="profile">Profile</string>
+    <string name="log_out">Log out</string>
 
 
 </resources>

@@ -60,7 +60,8 @@ class LoginFragment : Fragment() {
         val passwordEditText: EditText = binding.password
         val loginButton: Button = binding.login
         val loadingProgressBar = binding.loading
-        loginButton.isEnabled=false
+
+        //loginButton.isEnabled=false
 
        binding.textRegister.setOnClickListener {
            findNavController().navigate(R.id.action_LoginFragment_to_RegistrationFragment)
@@ -100,8 +101,8 @@ class LoginFragment : Fragment() {
                 loginButton.isEnabled= (emailEditText.text.isNotEmpty()) && (passwordEditText.text.isNotEmpty())
             }
         }
-        emailEditText.addTextChangedListener(afterTextChangedListener)
-        passwordEditText.addTextChangedListener(afterTextChangedListener)
+//        emailEditText.addTextChangedListener(afterTextChangedListener)
+//        passwordEditText.addTextChangedListener(afterTextChangedListener)
 //        passwordEditText.setOnEditorActionListener { _, actionId, _ ->
 //            if (actionId == EditorInfo.IME_ACTION_DONE) {
 //                loginViewModel.login(
@@ -113,18 +114,27 @@ class LoginFragment : Fragment() {
 //        }
 
         loginButton.setOnClickListener {
-            findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
-//            loadingProgressBar.visibility = View.VISIBLE
-//            auth.signInWithEmailAndPassword(emailEditText.text.toString(),passwordEditText.text.toString())
-//                .addOnCompleteListener { task ->
-//                    if (task.isSuccessful) {
-//                        findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
-//                        println("createUserWithEmail:success")
-//                    } else {
-//                        toast("Incorrect username or password. Please try again.", Toast.LENGTH_LONG)
-//                    }
-//                    loadingProgressBar.visibility = View.GONE
-//                }
+            if (emailEditText.text.isEmpty()) {
+                binding.emailTextInputLayout.error="E-mail address is required"
+            }
+            if (passwordEditText.text.isEmpty()) {
+                binding.passwordTextInputLayout.error="Password is required"
+
+            }
+            if( passwordEditText.text.isEmpty() || emailEditText.text.isEmpty())
+                return@setOnClickListener
+
+            loadingProgressBar.visibility = View.VISIBLE
+            auth.signInWithEmailAndPassword(emailEditText.text.toString(),passwordEditText.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
+                        println("createUserWithEmail:success")
+                    } else {
+                        toast("Incorrect username or password. Please try again.", Toast.LENGTH_LONG)
+                    }
+                    loadingProgressBar.visibility = View.GONE
+                }
 //            loginViewModel.login(
 //                emailEditText.text.toString(),
 //                passwordEditText.text.toString()

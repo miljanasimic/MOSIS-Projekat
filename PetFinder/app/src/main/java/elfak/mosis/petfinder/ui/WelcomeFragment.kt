@@ -1,10 +1,11 @@
-package elfak.mosis.petfinder
+package elfak.mosis.petfinder.ui
 
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import elfak.mosis.petfinder.R
 import elfak.mosis.petfinder.databinding.FragmentWelcomeBinding
 
 class WelcomeFragment : Fragment() {

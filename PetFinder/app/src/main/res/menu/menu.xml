@@ -7,16 +7,16 @@
     <item
         android:id="@+id/action_notifications"
         android:icon="@drawable/ic_baseline_notifications_none_50"
-        android:title="Notifications"
+        android:title="@string/notifications"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_profile"
         app:showAsAction="always"
         android:icon="@drawable/ic_baseline_person_outline_50"
-        android:title="Profile" />
+        android:title="@string/profile" />
     <item
         android:id="@+id/action_logout"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_baseline_exit_to_app_50"
-        android:title="Log out" />
+        android:title="@string/log_out" />
 </menu>

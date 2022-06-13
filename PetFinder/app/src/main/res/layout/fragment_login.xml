@@ -48,9 +48,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textTitle"
-        app:layout_constraintVertical_bias="0.182">
+        app:helperText="Required"
+        app:errorEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,10 +61,27 @@
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"
-            android:textColor="#AAAAAA"
+            android:textColor="@color/black"
+            android:textColorHint="@color/palette5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+
+<!--        <EditText-->
+<!--            android:id="@+id/email"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:autofillHints="username"-->
+<!--            android:hint="@string/prompt_email"-->
+<!--            android:inputType="textEmailAddress"-->
+<!--            android:selectAllOnFocus="true"-->
+<!--            android:textColor="@color/black"-->
+<!--            android:textColorHint="@color/palette5"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textTitle" />-->
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,9 +95,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email_text_input_layout"
-        app:passwordToggleEnabled="true">
+        app:passwordToggleEnabled="true"
+        app:helperText="Required"
+        app:errorEnabled="true">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,7 +108,8 @@
             android:autofillHints="password"
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
-            android:selectAllOnFocus="true" />
+            android:selectAllOnFocus="true"
+            android:textColor="@color/black" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
