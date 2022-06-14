@@ -25,18 +25,23 @@ class RegisterViewModel : ViewModel() {
     val registerResult : LiveData<RegisterResult> = _registerResult
 
     fun register(user: User, password: String, currentPhotoPath: String, photoUri: Uri) {
-        val imageRef: StorageReference = storageRef.child("images/$currentPhotoPath")
-        val uploadTask=imageRef.putFile(photoUri)
-        uploadTask.addOnFailureListener {e->
-            _registerResult.value= RegisterResult(error = "Image upload failed. Please try again.")
-            Log.w(ContentValues.TAG, "Error uploading image", e)
-        }.addOnSuccessListener { taskSnapshot ->
-            imageRef.downloadUrl.addOnSuccessListener {
-                user.imageUrl=it.toString()
-                insertUserData(user, password)
-            }.addOnFailureListener{e->
-                _registerResult.value= RegisterResult(error = "Registration failed. Please try again.")
-                Log.w(ContentValues.TAG, "Error firebase sign-up", e)
+        if (currentPhotoPath.isEmpty()){
+            //TODO dodati useru putanju za default-nu sliku
+            insertUserData(user, password)
+        } else{
+            val imageRef: StorageReference = storageRef.child("images/$currentPhotoPath")
+            val uploadTask=imageRef.putFile(photoUri)
+            uploadTask.addOnFailureListener {e->
+                _registerResult.value= RegisterResult(error = "Image upload failed. Please try again.")
+                Log.w(ContentValues.TAG, "Error uploading image", e)
+            }.addOnSuccessListener { taskSnapshot ->
+                imageRef.downloadUrl.addOnSuccessListener {
+                    user.imageUrl=it.toString()
+                    insertUserData(user, password)
+                }.addOnFailureListener{e->
+                    _registerResult.value= RegisterResult(error = "Image upload failed. Please try again.")
+                    Log.w(ContentValues.TAG, "Error firebase sign-up", e)
+                }
             }
         }
     }
@@ -54,18 +59,26 @@ class RegisterViewModel : ViewModel() {
                         .addOnFailureListener { e ->
                             _registerResult.value= RegisterResult(error = "Registration failed. Please try again.")
                             Log.w(ContentValues.TAG, "Error adding document", e)
-                            //TODO obrisati iz baze usera??
+                            storage.getReferenceFromUrl(user.imageUrl).delete()
+                                .addOnSuccessListener {}.addOnFailureListener {}
                         }
+                } else {
+                    _registerResult.value= RegisterResult(error =  task.exception?.message)
+                    Log.w(ContentValues.TAG, "Error adding document", task.exception)
+                    storage.getReferenceFromUrl(user.imageUrl).delete()
+                        .addOnSuccessListener {}.addOnFailureListener {}
                 }
             }
-
     }
+
     fun isEmailValid(email: String): Boolean {
         return Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
-
     fun isPhoneValid(phone: String): Boolean {
         return phone.length==8 || phone.length==9
+    }
+    fun isPasswordValid(password: String): Boolean {
+        return password.length >= 6
     }
 
 }
