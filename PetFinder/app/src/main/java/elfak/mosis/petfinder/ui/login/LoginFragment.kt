@@ -55,17 +55,19 @@ class LoginFragment : Fragment() {
        }
 
         loginButton.setOnClickListener {
-            if (emailEditText.text.isEmpty()) {
-                binding.emailTextInputLayout.error="E-mail address is required"
-            }
-            if (passwordEditText.text.isEmpty()) {
-                binding.passwordTextInputLayout.error="Password is required"
-            }
-            if( passwordEditText.text.isEmpty() || emailEditText.text.isEmpty())
-                return@setOnClickListener
-
-            loadingProgressBar.visibility = View.VISIBLE
-            loginViewModel.login(emailEditText.text.toString(),passwordEditText.text.toString())
+//            if (emailEditText.text.isEmpty()) {
+//                binding.emailTextInputLayout.error="E-mail address is required"
+//            }
+//            if (passwordEditText.text.isEmpty()) {
+//                binding.passwordTextInputLayout.error="Password is required"
+//            }
+//            if( passwordEditText.text.isEmpty() || emailEditText.text.isEmpty())
+//                return@setOnClickListener
+//
+//            loadingProgressBar.visibility = View.VISIBLE
+//            loginViewModel.login(emailEditText.text.toString(),passwordEditText.text.toString())
+            //TODO VRATI OVO ZAKOMENTARISANO
+            findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
         }
 
         loginViewModel.loginResult.observe(viewLifecycleOwner,

@@ -19,6 +19,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
 import elfak.mosis.petfinder.databinding.ActivityMainBinding
 import elfak.mosis.petfinder.ui.HomeFragment
 
@@ -37,14 +38,21 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav.setupWithNavController(navController)
+        //val tabBar=findViewById<TabLayout>(R.id.tabLayoutFriends)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
-                R.id.HomeFragment -> bottomNav.visibility = View.VISIBLE
-                R.id.MapFragment -> bottomNav.visibility = View.VISIBLE
-                R.id.NewPostFragment-> bottomNav.visibility = View.VISIBLE
-                R.id.FriendsFragment -> bottomNav.visibility = View.VISIBLE
-                R.id.RankFragment -> bottomNav.visibility = View.VISIBLE
-                else -> bottomNav.visibility = View.GONE
+                R.id.HomeFragment, R.id.MapFragment,  R.id.NewPostFragment, R.id.RankFragment -> {
+                    bottomNav.visibility = View.VISIBLE
+                    //tabBar.visibility = View.GONE
+                }
+                R.id.FriendsFragment -> {
+                    bottomNav.visibility = View.VISIBLE
+                    //tabBar.visibility = View.VISIBLE
+                }
+                else -> {
+                    bottomNav.visibility = View.GONE
+                    //tabBar.visibility = View.GONE
+                }
             }
         }
         //TODO backstack za fragmente
