@@ -66,7 +66,7 @@
 
     <fragment
         android:id="@+id/FriendsFragment"
-        android:name="elfak.mosis.petfinder.ui.FriendsFragment"
+        android:name="elfak.mosis.petfinder.ui.friends.FriendsFragment"
         tools:layout="@layout/fragment_friends">
 
     </fragment>

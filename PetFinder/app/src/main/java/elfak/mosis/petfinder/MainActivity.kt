@@ -38,20 +38,16 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
         bottomNav.setupWithNavController(navController)
-        //val tabBar=findViewById<TabLayout>(R.id.tabLayoutFriends)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id){
                 R.id.HomeFragment, R.id.MapFragment,  R.id.NewPostFragment, R.id.RankFragment -> {
                     bottomNav.visibility = View.VISIBLE
-                    //tabBar.visibility = View.GONE
                 }
                 R.id.FriendsFragment -> {
                     bottomNav.visibility = View.VISIBLE
-                    //tabBar.visibility = View.VISIBLE
                 }
                 else -> {
                     bottomNav.visibility = View.GONE
-                    //tabBar.visibility = View.GONE
                 }
             }
         }
