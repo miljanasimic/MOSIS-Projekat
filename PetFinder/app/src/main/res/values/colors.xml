@@ -13,4 +13,5 @@
     <color name="palette4">#FED9B7</color>
     <color name="palette5">#F07167</color>
     <color name="gray">#808080</color>
+    <color name="darkGray">#353535</color>
 </resources>

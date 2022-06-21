@@ -55,6 +55,12 @@
         android:id="@+id/MapFragment"
         android:name="elfak.mosis.petfinder.ui.MapFragment"
         tools:layout="@layout/fragment_map">
+        <action
+            android:id="@+id/action_MapFragment_to_WelcomeFragment"
+            app:destination="@id/WelcomeFragment"/>
+        <action
+            android:id="@+id/action_MapFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment"/>
 
     </fragment>
 
@@ -62,28 +68,44 @@
         android:id="@+id/NewPostFragment"
         android:name="elfak.mosis.petfinder.ui.NewPostFragment"
         tools:layout="@layout/fragment_new_post">
+        <action
+            android:id="@+id/action_NewPostFragment_to_WelcomeFragment"
+            app:destination="@id/WelcomeFragment"/>
+        <action
+            android:id="@+id/action_NewPostFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment"/>
     </fragment>
 
     <fragment
         android:id="@+id/FriendsFragment"
         android:name="elfak.mosis.petfinder.ui.friends.FriendsFragment"
         tools:layout="@layout/fragment_friends">
+        <action
+            android:id="@+id/action_FriendsFragment_to_WelcomeFragment"
+            app:destination="@id/WelcomeFragment"/>
+        <action
+            android:id="@+id/action_FriendsFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment"/>
 
     </fragment>
 
     <fragment
         android:id="@+id/RankFragment"
-        android:name="elfak.mosis.petfinder.ui.RankFragment"
+        android:name="elfak.mosis.petfinder.ui.rank.RankFragment"
         tools:layout="@layout/fragment_rank">
+        <action
+            android:id="@+id/action_RankFragment_to_WelcomeFragment"
+            app:destination="@id/WelcomeFragment"/>
+        <action
+            android:id="@+id/action_RankFragment_to_ProfileFragment"
+            app:destination="@id/ProfileFragment"/>
 
     </fragment>
 
     <fragment
         android:id="@+id/ProfileFragment"
-        android:name="elfak.mosis.petfinder.ui.ProfileFragment"
+        android:name="elfak.mosis.petfinder.ui.profile.ProfileFragment"
         tools:layout="@layout/fragment_profile">
-
-
     </fragment>
 
 </navigation>

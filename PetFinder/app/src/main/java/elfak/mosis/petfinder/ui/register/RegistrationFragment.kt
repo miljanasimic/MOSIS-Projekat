@@ -139,6 +139,7 @@ class RegistrationFragment : Fragment() {
             val imageBitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
             profileImage.setImageBitmap(imageBitmap)
             profileImage.setColorFilter(Color.parseColor("#80000000"))
+            profileImage.rotation= (90).toFloat()
         }
         else{
             currentPhotoPath=""

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/background"
@@ -80,6 +81,7 @@
         app:helperText="Required"
         app:errorEnabled="true"
         app:prefixText="+381"
+        app:prefixTextAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/last_name_text_input_layout"
@@ -112,9 +114,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="186dp"
-        android:layout_height="128dp"
+        android:layout_width="100dp"
+        android:layout_height="120dp"
         android:layout_marginTop="10dp"
+        android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@id/email_text_input_layout"
         app:layout_constraintEnd_toStartOf="@id/camera"
         app:layout_constraintStart_toStartOf="parent"

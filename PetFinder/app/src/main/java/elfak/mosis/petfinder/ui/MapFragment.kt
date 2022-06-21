@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import elfak.mosis.petfinder.R
 import elfak.mosis.petfinder.databinding.FragmentMapBinding
 
@@ -33,6 +36,20 @@ class MapFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu, menu)
 
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_profile-> {
+                this.findNavController().navigate(R.id.action_MapFragment_to_ProfileFragment)
+                true
+            }
+            R.id.action_logout -> {
+                Firebase.auth.signOut()
+                this.findNavController().navigate(R.id.action_MapFragment_to_WelcomeFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

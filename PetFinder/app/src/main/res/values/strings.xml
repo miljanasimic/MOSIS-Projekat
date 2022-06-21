@@ -36,4 +36,16 @@
     <string name="friends_tab3">Connect</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to profile page-->
+    <string name="my_posts">My posts</string>
+    <string name="update_first_name">Update First Name</string>
+    <string name="update_last_name">Update Last Name</string>
+    <string name="update_phone_number">Update Phone Number</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="save">Save</string>
+    <!-- Strings related to rank page-->
+    <string name="rank_page_text">Collect points by helping people find their lost pets.</string>
+    <string name="user_rankings">User rankings</string>
+    <string name="your_score">Your score</string>
 </resources>

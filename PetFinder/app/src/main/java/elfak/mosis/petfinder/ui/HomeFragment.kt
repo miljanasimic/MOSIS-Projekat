@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import elfak.mosis.petfinder.R
 import elfak.mosis.petfinder.databinding.FragmentHomeBinding
 
@@ -41,11 +43,16 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_profile-> {
+
                 this.findNavController().navigate(R.id.action_HomeFragment_to_ProfileFragment)
                 true
             }
             R.id.action_notifications -> {
-                //this.findNavController().navigate()
+                true
+            }
+            R.id.action_logout -> {
+                Firebase.auth.signOut()
+                this.findNavController().navigate(R.id.action_HomeFragment_to_WelcomeFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

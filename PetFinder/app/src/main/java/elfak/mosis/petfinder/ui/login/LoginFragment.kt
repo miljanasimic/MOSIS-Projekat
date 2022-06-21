@@ -49,34 +49,39 @@ class LoginFragment : Fragment() {
         val passwordEditText: EditText = binding.password
         val loginButton: Button = binding.login
         val loadingProgressBar = binding.loading
+        var calledLogin = false
 
        binding.textRegister.setOnClickListener {
            findNavController().navigate(R.id.action_LoginFragment_to_RegistrationFragment)
        }
 
         loginButton.setOnClickListener {
-//            if (emailEditText.text.isEmpty()) {
-//                binding.emailTextInputLayout.error="E-mail address is required"
-//            }
-//            if (passwordEditText.text.isEmpty()) {
-//                binding.passwordTextInputLayout.error="Password is required"
-//            }
-//            if( passwordEditText.text.isEmpty() || emailEditText.text.isEmpty())
-//                return@setOnClickListener
-//
-//            loadingProgressBar.visibility = View.VISIBLE
-//            loginViewModel.login(emailEditText.text.toString(),passwordEditText.text.toString())
+            if (emailEditText.text.isEmpty()) {
+                binding.emailTextInputLayout.error="E-mail address is required"
+            }
+            if (passwordEditText.text.isEmpty()) {
+                binding.passwordTextInputLayout.error="Password is required"
+            }
+            if( passwordEditText.text.isEmpty() || emailEditText.text.isEmpty())
+                return@setOnClickListener
+
+            loadingProgressBar.visibility = View.VISIBLE
+            loginViewModel.login(emailEditText.text.toString(),passwordEditText.text.toString())
+            calledLogin=true
             //TODO VRATI OVO ZAKOMENTARISANO
-            findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
+            //findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
         }
 
         loginViewModel.loginResult.observe(viewLifecycleOwner,
             Observer { result ->
-                loadingProgressBar.visibility = View.GONE
-                if (result.isSuccess) {
-                    findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
-                } else {
-                    result.message?.let { Toast.makeText(view.context, it, Toast.LENGTH_LONG).show() }
+                if(calledLogin){
+                    loadingProgressBar.visibility = View.GONE
+                    if (result.isSuccess) {
+                        findNavController().navigate(R.id.action_LoginFragment_to_HomeFragment)
+                    } else {
+                        result.message?.let { Toast.makeText(view.context, it, Toast.LENGTH_LONG).show() }
+                    }
+                    calledLogin=false
                 }
             })
     }

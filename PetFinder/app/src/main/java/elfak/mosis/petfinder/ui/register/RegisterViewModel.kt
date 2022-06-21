@@ -51,10 +51,11 @@ class RegisterViewModel : ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     db.collection("users")
-                        .add(user)
-                        .addOnSuccessListener { documentReference ->
+                        .document(auth.currentUser!!.uid.toString())
+                        .set(user)
+                        .addOnSuccessListener {
                             _registerResult.value= RegisterResult(success = "Your account has been successfully created! Please log in.")
-                            Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
+                            //Log.d(ContentValues.TAG, "DocumentSnapshot added with ID: ${documentReference.id}")
                         }
                         .addOnFailureListener { e ->
                             _registerResult.value= RegisterResult(error = "Registration failed. Please try again.")
