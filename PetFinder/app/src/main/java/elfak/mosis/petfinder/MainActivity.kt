@@ -59,11 +59,13 @@ class MainActivity : AppCompatActivity() {
                 || super.onSupportNavigateUp()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
-
-        Toast.makeText(applicationContext,"back",Toast.LENGTH_LONG).show()
-    }
+//    override fun onBackPressed() {
+//        if(supportFragmentManager.backStackEntryCount==0)
+//            super.onBackPressed()
+//        else
+//            supportFragmentManager.popBackStack()
+//        //Toast.makeText(applicationContext,"back",Toast.LENGTH_LONG).show()
+//    }
 
 }
+

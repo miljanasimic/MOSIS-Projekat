@@ -48,4 +48,6 @@
     <string name="rank_page_text">Collect points by helping people find their lost pets.</string>
     <string name="user_rankings">User rankings</string>
     <string name="your_score">Your score</string>
+    <!-- Strings related to connect friends page-->
+    <string name="send_request">Send Request</string>
 </resources>

@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="?android:attr/actionBarSize"
     tools:context=".ui.friends.AllFriendsFragment">
 
-    <TextView
+    <Button
+        android:id="@+id/buttonMakeDiscoverable"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/friends_tab2"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Enable my device discoverable to other"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
