@@ -33,4 +33,27 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonDiscover"
         android:divider="@android:color/transparent"
         android:dividerHeight="5.0sp"/>
+    <TextView
+        android:id="@+id/nobody_available"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/buttonDiscover"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:text="Nobody is available at the moment.Give it another try in a few moments."
+        android:textColor="@color/palette5"
+        android:visibility="gone"
+        android:textAlignment="center"/>
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

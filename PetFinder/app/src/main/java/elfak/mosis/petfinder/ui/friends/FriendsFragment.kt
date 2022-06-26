@@ -59,7 +59,7 @@ class FriendsFragment : Fragment() {
     }
 
     private fun setUpTabs() {
-        val adapter = ViewPagerAdapter(parentFragmentManager)
+        val adapter = ViewPagerAdapter(childFragmentManager)
         adapter.addFragment(AllFriendsFragment(), "All")
         adapter.addFragment(FriendsRequestsFragment(), "Requests")
         adapter.addFragment(ConnectFriendsFragment(), "Connect")

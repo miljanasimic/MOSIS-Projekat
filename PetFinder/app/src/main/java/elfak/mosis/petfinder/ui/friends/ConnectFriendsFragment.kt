@@ -14,6 +14,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -54,11 +55,9 @@ class ConnectFriendsFragment : Fragment() {
         listAdapter = ConnectAdapter(view.context, devices)
         devicesListView.adapter=listAdapter
         devicesListView.setOnItemClickListener { adapterView, view, pos, id ->
-            val device=listAdapter.getClickedDevice()
-            if (device!=null){
+                val device=adapterView.getItemAtPosition(pos) as BluetoothDevice
                 val connectThread = ConnectThread(device)
                 connectThread.start()
-            }
         }
 
         val bluetoothManager: BluetoothManager? = ContextCompat.getSystemService(requireContext(), BluetoothManager::class.java)
@@ -66,11 +65,20 @@ class ConnectFriendsFragment : Fragment() {
         if (!bluetoothAdapter.isEnabled) enableBluetooth(view.context)
         checkLocationPermission()
         binding.buttonDiscover.setOnClickListener{
+            binding.nobodyAvailable.visibility=View.GONE
+            binding.progressBar.visibility=View.VISIBLE
             listAdapter.clear()
             listAdapter.notifyDataSetChanged()
-            val isSuccess=bluetoothAdapter.startDiscovery()
+            bluetoothAdapter.startDiscovery()
             val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
             activity?.registerReceiver(receiver, filter)
+            Handler().postDelayed({
+                if(listAdapter.isEmpty){
+                    binding.progressBar.visibility=View.GONE
+                    binding.nobodyAvailable.visibility=View.VISIBLE
+                }
+
+            }, 2000)
         }
     }
 
@@ -98,13 +106,15 @@ class ConnectFriendsFragment : Fragment() {
         @SuppressLint("MissingPermission")
         override fun onReceive(context: Context, intent: Intent) {
             val action: String? = intent.action
-            Toast.makeText(requireContext(), intent.toString(), Toast.LENGTH_LONG).show()
             when(action) {
                 BluetoothDevice.ACTION_FOUND -> {
                     val device: BluetoothDevice =
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-                    if(listAdapter.addDevice(device))
+                    if(listAdapter.addDevice(device)){
+                        binding.progressBar.visibility=View.GONE
+                        binding.nobodyAvailable.visibility=View.GONE
                         listAdapter.notifyDataSetChanged()
+                    }
                 }
             }
         }
@@ -112,9 +122,15 @@ class ConnectFriendsFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     override fun onDestroy() {
-        activity?.unregisterReceiver(receiver)
-        bluetoothAdapter.cancelDiscovery()
-        super.onDestroy()
+        try{
+            activity?.unregisterReceiver(receiver)
+        }catch (e: java.lang.Exception){
+            print(e)
+        }finally {
+            bluetoothAdapter.cancelDiscovery()
+            super.onDestroy()
+        }
+
     }
 
     private fun requestLocationPermission() {

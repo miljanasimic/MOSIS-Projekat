@@ -27,8 +27,8 @@ class ConnectAdapter(private val context: Context, private val dataSource: Array
         val deviceName = rowView.findViewById<TextView>(R.id.device_name)
         val device = getItem(position)
         deviceName.text = device.name
-        val sendRequest = rowView.findViewById<ImageView>(R.id.send_request_icon)
-        sendRequest.setOnClickListener { this.device = device }
+        //val sendRequest = rowView.findViewById<ImageView>(R.id.send_request_icon)
+        //sendRequest.setOnClickListener { this.device = device }
         return rowView
     }
 
@@ -44,7 +44,7 @@ class ConnectAdapter(private val context: Context, private val dataSource: Array
         dataSource.clear()
     }
 
-    fun getClickedDevice(): BluetoothDevice? {
-        return this.device
-    }
+//    fun getClickedDevice(): BluetoothDevice? {
+//        return this.device
+//    }
 }
