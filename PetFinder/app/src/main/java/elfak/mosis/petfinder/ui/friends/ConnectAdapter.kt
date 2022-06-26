@@ -6,10 +6,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import elfak.mosis.petfinder.R
 
 class ConnectAdapter(private val context: Context, private val dataSource: ArrayList<BluetoothDevice>): BaseAdapter() {
@@ -30,7 +27,7 @@ class ConnectAdapter(private val context: Context, private val dataSource: Array
         val deviceName = rowView.findViewById<TextView>(R.id.device_name)
         val device = getItem(position)
         deviceName.text = device.name
-        val sendRequest = rowView.findViewById<LinearLayout>(R.id.send_Request)
+        val sendRequest = rowView.findViewById<ImageView>(R.id.send_request_icon)
         sendRequest.setOnClickListener { this.device = device }
         return rowView
     }
