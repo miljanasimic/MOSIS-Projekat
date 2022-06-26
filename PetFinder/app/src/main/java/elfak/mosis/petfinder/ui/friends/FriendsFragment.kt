@@ -35,7 +35,6 @@ class FriendsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         (activity as AppCompatActivity?)!!.supportActionBar?.setHomeButtonEnabled(false)
-        val tabLayoutFriends: TabLayout = binding.tabFriends
         setUpTabs()
         binding.tabFriends.setupWithViewPager(binding.viewPager)
     }
