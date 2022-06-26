@@ -71,10 +71,8 @@ class ConnectFriendsFragment : Fragment() {
             val isSuccess=bluetoothAdapter.startDiscovery()
             val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
             activity?.registerReceiver(receiver, filter)
-
         }
     }
-
 
     private fun enableBluetooth(context: Context) {
         Toast.makeText(context, "In order to connect to other users, you have to enable Bluetooth.", Toast.LENGTH_SHORT).show()
@@ -97,20 +95,14 @@ class ConnectFriendsFragment : Fragment() {
     }
 
     private val receiver = object : BroadcastReceiver() {
-
         @SuppressLint("MissingPermission")
         override fun onReceive(context: Context, intent: Intent) {
             val action: String? = intent.action
             Toast.makeText(requireContext(), intent.toString(), Toast.LENGTH_LONG).show()
             when(action) {
                 BluetoothDevice.ACTION_FOUND -> {
-                    // Discovery has found a device. Get the BluetoothDevice
-                    // object and its info from the Intent.
                     val device: BluetoothDevice =
                         intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)!!
-                    val deviceName = device.name
-                    val deviceHardwareAddress = device.address // MAC address
-                    //listAdapter.add(device)
                     if(listAdapter.addDevice(device))
                         listAdapter.notifyDataSetChanged()
                 }
@@ -123,7 +115,6 @@ class ConnectFriendsFragment : Fragment() {
         activity?.unregisterReceiver(receiver)
         bluetoothAdapter.cancelDiscovery()
         super.onDestroy()
-
     }
 
     private fun requestLocationPermission() {
@@ -145,28 +136,22 @@ class ConnectFriendsFragment : Fragment() {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(
                     requireActivity(),
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             ) {
-                // Show an explanation to the user *asynchronously* -- don't block
-                // this thread waiting for the user's response! After the user
-                // sees the explanation, try again to request the permission.
                 AlertDialog.Builder(requireContext())
                     .setTitle("Location Permission Needed")
                     .setMessage("This app needs the Location permission, please accept to use location functionality")
                     .setPositiveButton(
                         "OK"
                     ) { _, _ ->
-                        //Prompt the user once explanation has been shown
                         requestLocationPermission()
                     }
                     .create()
                     .show()
             } else {
-                // No explanation needed, we can request the permission.
                 requestLocationPermission()
             }
         } else {
@@ -206,21 +191,19 @@ class ConnectFriendsFragment : Fragment() {
     private inner class ConnectThread(device: BluetoothDevice) : Thread() {
 
         private val mmSocket: BluetoothSocket? by lazy(LazyThreadSafetyMode.NONE) {
-            device.createRfcommSocketToServiceRecord(UUID.fromString("5fc03087-d265-11e7-b8c6-83e29cd24f4c"))
+            device.createRfcommSocketToServiceRecord(UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
         }
 
         public override fun run() {
-            // Cancel discovery because it otherwise slows down the connection.
             bluetoothAdapter.cancelDiscovery()
 
             mmSocket?.let { socket ->
-                // Connect to the remote device through the socket. This call blocks
-                // until it succeeds or throws an exception.
-                socket.connect()
-
-                // The connection attempt succeeded. Perform work associated with
-                // the connection in a separate thread.
-                manageMyConnectedSocket(socket)
+                try{
+                    socket.connect()
+                    manageMyConnectedSocket(socket)
+                } catch (e: Exception){
+                    print(e)
+                }
             }
         }
 
@@ -228,7 +211,6 @@ class ConnectFriendsFragment : Fragment() {
 
         }
 
-        // Closes the client socket and causes the thread to finish.
         fun cancel() {
             try {
                 mmSocket?.close()

@@ -27,8 +27,7 @@ class FriendsRequestsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var bluetoothAdapter: BluetoothAdapter
     private val REQUEST_CODE_ENABLE_BT = 1
-    private val REQUEST_CODE_ENABLE_DISC = 1
-    private var isDiscoverable = false
+    private val REQUEST_CODE_ENABLE_DISC = 2
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -54,10 +53,6 @@ class FriendsRequestsFragment : Fragment() {
                 putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 300)
             }
             startActivityForResult(discoverableIntent, REQUEST_CODE_ENABLE_DISC)
-            if(!isDiscoverable)
-                return@setOnClickListener
-
-
         }
     }
     private fun enableBluetooth(context: Context) {
@@ -77,18 +72,20 @@ class FriendsRequestsFragment : Fragment() {
             } else if (resultCode == Activity.RESULT_CANCELED)
                 Toast.makeText(view?.context, "Cancelled", Toast.LENGTH_SHORT).show()
         } else if (requestCode == REQUEST_CODE_ENABLE_DISC) {
-            if (resultCode == Activity.RESULT_CANCELED) isDiscoverable = true else if ( resultCode == Activity.RESULT_OK) isDiscoverable = true
+            if ( resultCode == 300) {
+                val acceptThread = AcceptThread()
+                acceptThread.start()
+            }
         }
     }
     @SuppressLint("MissingPermission")
     private inner class AcceptThread : Thread() {
 
         private val mmServerSocket: BluetoothServerSocket? by lazy(LazyThreadSafetyMode.NONE) {
-            bluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord("PetFinder", UUID.fromString("5fc03087-d265-11e7-b8c6-83e29cd24f4c"))
+            bluetoothAdapter.listenUsingInsecureRfcommWithServiceRecord("PetFinder", UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
         }
 
         override fun run() {
-            // Keep listening until exception occurs or a socket is returned.
             var shouldLoop = true
             while (shouldLoop) {
                 val socket: BluetoothSocket? = try {
@@ -110,7 +107,6 @@ class FriendsRequestsFragment : Fragment() {
 
         }
 
-        // Closes the connect socket and causes the thread to finish.
         fun cancel() {
             try {
                 mmServerSocket?.close()
@@ -119,5 +115,4 @@ class FriendsRequestsFragment : Fragment() {
             }
         }
     }
-
 }
