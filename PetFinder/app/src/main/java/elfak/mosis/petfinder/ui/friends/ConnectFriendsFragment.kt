@@ -27,8 +27,11 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import elfak.mosis.petfinder.databinding.FragmentConnectFriendsBinding
 import java.io.IOException
+import java.io.OutputStream
 import java.util.*
 
 
@@ -236,7 +239,8 @@ class ConnectFriendsFragment : Fragment() {
         }
 
         private fun manageMyConnectedSocket(socket: BluetoothSocket) {
-
+            val connectionThread = ConnectedThread(socket)
+            connectionThread.start()
         }
 
         fun cancel() {
@@ -244,6 +248,27 @@ class ConnectFriendsFragment : Fragment() {
                 mmSocket?.close()
             } catch (e: IOException) {
                 Log.e(TAG, "Could not close the client socket", e)
+            }
+        }
+    }
+
+    private inner class ConnectedThread(private val mmSocket: BluetoothSocket) : Thread() {
+        private val mmOutStream: OutputStream = mmSocket.outputStream
+        override fun run() {
+            val userEmail = Firebase.auth.currentUser?.email
+            if(userEmail!=null){
+                try{
+                    mmOutStream.write(userEmail.encodeToByteArray())
+                } catch (ex: IOException) {
+                    Log.e(TAG, "Error occurred when sending data", ex)
+                }
+            }
+        }
+        fun cancel() {
+            try {
+                mmSocket.close()
+            } catch (e: IOException) {
+                Log.e(TAG, "Could not close the connect socket", e)
             }
         }
     }

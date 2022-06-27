@@ -7,6 +7,7 @@ import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothServerSocket
 import android.bluetooth.BluetoothSocket
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -17,12 +18,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import elfak.mosis.petfinder.databinding.FragmentFriendsRequestsBinding
 import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.*
 
 //server
 class FriendsRequestsFragment : Fragment() {
+    private val friendsViewModel: FriendsViewModel by activityViewModels()
     private var _binding: FragmentFriendsRequestsBinding? = null
     private val binding get() = _binding!!
     private lateinit var bluetoothAdapter: BluetoothAdapter
@@ -103,8 +110,9 @@ class FriendsRequestsFragment : Fragment() {
             }
         }
 
-        private fun manageMyConnectedSocket(it: BluetoothSocket) {
-
+        private fun manageMyConnectedSocket(socket: BluetoothSocket) {
+            val connectionThread = AcceptedThread(socket)
+            connectionThread.start()
         }
 
         fun cancel() {
@@ -112,6 +120,43 @@ class FriendsRequestsFragment : Fragment() {
                 mmServerSocket?.close()
             } catch (e: IOException) {
                 Log.e(ContentValues.TAG, "Could not close the connect socket", e)
+            }
+        }
+    }
+
+    private inner class AcceptedThread(private val mmSocket: BluetoothSocket) : Thread() {
+
+        private val mmInStream: InputStream = mmSocket.inputStream
+        private val mmBuffer: ByteArray = ByteArray(1024) // mmBuffer store for the stream
+
+        override fun run() {
+            var numBytes: Int // bytes returned from read()
+
+            // Keep listening to the InputStream until an exception occurs.
+            while (true) {
+                // Read from the InputStream.
+                numBytes = try {
+                    mmInStream.read(mmBuffer)
+                } catch (e: IOException) {
+                    Log.d(TAG, "Input stream was disconnected", e)
+                    break
+                } finally {
+                    if(mmBuffer.isNotEmpty()){
+                        val friendId = mmBuffer.decodeToString()
+                        friendsViewModel.createFriendship(friendId,
+                            Firebase.auth.currentUser?.email.toString()
+                        )
+
+                    }
+                }
+            }
+        }
+        // Call this method from the main activity to shut down the connection.
+        fun cancel() {
+            try {
+                mmSocket.close()
+            } catch (e: IOException) {
+                Log.e(TAG, "Could not close the connect socket", e)
             }
         }
     }
